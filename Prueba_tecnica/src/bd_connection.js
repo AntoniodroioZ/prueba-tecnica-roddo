@@ -53,7 +53,7 @@ const login = async (username, password) => {
                         });
                 }
             }
-            console.log(result)
+            // console.log(result)
         });
     });
 }
@@ -83,7 +83,7 @@ const selectAll = (user, token) => {
     const sql = "SELECT * FROM real_state_list";
     let compare = bcrypt.compareSync(user, token);
     if (compare) {
-        console.log(true);
+        // console.log(true);
         return new Promise((resolve, reject) => {
 
             conn.query(sql, (err, result, fields) => {

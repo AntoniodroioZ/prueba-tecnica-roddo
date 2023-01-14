@@ -75,63 +75,56 @@ app.post('/api/createResource', async (req, res) => {
     }
     if(req.query.field == "" || typeof parseInt(req.query.field) != "number" || Number.isNaN(parseInt(req.query.field))==true){
         bandera = false;
-        res.send({
-            "message": "El recurso no se pudo agregar correctamente, intente de nuevo",
-            "code":1
-        });
+        
     }else{
         newResource.field = req.query.field;
     }
     if(req.query.construction == "" || typeof parseInt(req.query.construction) != "number" || Number.isNaN(parseInt(req.query.construction))==true){
         bandera = false;
-        res.send({
-            "message": "El recurso no se pudo agregar correctamente, intente de nuevo",
-            "code":1
-        });
+        
     }else{
         newResource.construction = req.query.construction;
     }
     if(req.query.bathrooms == "" || typeof parseInt(req.query.bathrooms) != "number" || Number.isNaN(parseInt(req.query.bathrooms))==true){
         bandera = false;
-        res.send({
-            "message": "El recurso no se pudo agregar correctamente, intente de nuevo",
-            "code":1
-        });
+        
     }else{
         newResource.bathrooms = req.query.bathrooms;
     }
     if(req.query.bedrooms == "" || typeof parseInt(req.query.bedrooms) != "number" || Number.isNaN(parseInt(req.query.bedrooms))==true){
         bandera = false;
-        res.send({
-            "message": "El recurso no se pudo agregar correctamente, intente de nuevo",
-            "code":1
-        });
+        
     }else{
         newResource.bedrooms = req.query.bedrooms;
     }
     if(req.query.parkingLots == "" || typeof parseInt(req.query.parkingLots) != "number" || Number.isNaN(parseInt(req.query.parkingLots))==true){
         bandera = false;
+        
+    }else{
+        newResource.parkingLots = req.query.parkingLots;
+    }
+
+    if(bandera == false){
         res.send({
             "message": "El recurso no se pudo agregar correctamente, intente de nuevo",
             "code":1
         });
     }else{
-        newResource.parkingLots = req.query.parkingLots;
+        const data = await createResource(newResource,bandera,user,hashToken);
+        if (data == true && bandera == true) {
+            res.send({
+                "message": "Recurso agregado correctamente",
+                "code":0
+            });
+        }else if(data == 0){
+            res.send({
+                "message": "No tienes autorización para hacer esta acción",
+                "code":2
+            });
+        }
     }
 
-    const data = await createResource(newResource,bandera,user,hashToken);
 
-    if (data == true && bandera == true) {
-        res.send({
-            "message": "Recurso agregado correctamente",
-            "code":0
-        });
-    }else if(data == 0){
-        res.send({
-            "message": "No tienes autorización para hacer esta acción",
-            "code":2
-        });
-    }
 });
 
 app.post('/api/deleteResource', async (req,res)=>{
