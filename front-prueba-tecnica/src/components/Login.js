@@ -12,13 +12,14 @@ import IconButton from '@mui/material/IconButton';
 import swAlert from '@sweetalert/with-react'
 import axios from 'axios';
 
-import { useNavigate, Navigate  } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+
 
 const styleCardLogin = { margin: "auto" }
 
 const Login = () => {
     let navigate = useNavigate();
-    const submitHandler = async (e) => {
+    const submitHandler = (e) => {
         e.preventDefault();
         const username = e.target.usernameTextField.value;
         const password = e.target.passwordTextField.value;
@@ -26,9 +27,9 @@ const Login = () => {
             swAlert(
                 <h2>Campos vacios</h2>
             );
-            return;
+            // return;
         }
-        await axios.post(`/api/login?username=${username}&password=${password}`,)
+        axios.post(`/api/login?username=${username}&password=${password}`,)
         .then(res=>{
             if(res.data.code == 1){
                 swAlert(
@@ -61,7 +62,7 @@ const Login = () => {
                         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                             Prueba Tecnica
                         </Typography>
-                        <Button color="inherit">Registro</Button>
+                        {/* <Button color="inherit">Registro</Button> */}
                     </Toolbar>
                 </AppBar>
             </Box>

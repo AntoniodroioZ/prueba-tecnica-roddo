@@ -11,13 +11,11 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import { useNavigate, Navigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import '../index.css';
 import axios from 'axios';
 import swal from '@sweetalert/with-react';
-import { Description } from '@mui/icons-material';
-
 
 const Cards = (props) => {
   const [open, setOpen] = React.useState(false);
