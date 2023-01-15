@@ -16,6 +16,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom'
+import swal from '@sweetalert/with-react';
 
 const List = () => {
     const [dataApi, setDataApi] = React.useState([]);
