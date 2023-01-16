@@ -130,15 +130,15 @@ app.post('/api/createResource', async (req, res) => {
     const hashToken = req.query.hash;
 
 
-    newResource.description = req.query.description;
-    newResource.address = req.query.address;
-    newResource.contactPhone = req.query.contactPhone;
-    newResource.contactMail = req.query.contactMail;
-    newResource.field = req.query.field;
-    newResource.construction = req.query.construction;
-    newResource.bathrooms = req.query.bathrooms;
-    newResource.bedrooms = req.query.bedrooms;
-    newResource.parkingLots = req.query.parkingLots;
+    let description = req.query.description;
+    let address = req.query.address;
+    let contactPhone = req.query.contactPhone;
+    let contactMail = req.query.contactMail;
+    let field = req.query.field;
+    let construction = req.query.construction;
+    let bathrooms = req.query.bathrooms;
+    let bedrooms = req.query.bedrooms;
+    let parkingLots = req.query.parkingLots;
 
 
     // if (bandera == false) {
@@ -162,7 +162,7 @@ app.post('/api/createResource', async (req, res) => {
     // }
 
 
-    const data = await createResource(newResource, bandera, user, hashToken);
+    const data = await createResource(bandera, user, hashToken, description,address,contactPhone,contactMail,field,construction,bathrooms,bedrooms,parkingLots);
     if (data == true) {
         res.send({
             "message": "Recurso agregado correctamente",
@@ -266,18 +266,15 @@ app.post('/api/updateResource', async (req, res) => {
     const hashToken = req.query.hash;
     let bandera = true;
 
-    let editResource = new Object();
-
-
-    editResource.description = req.query.description;
-    editResource.address = req.query.address;
-    editResource.contactPhone = req.query.contactPhone;
-    editResource.contactMail = req.query.contactMail;
-    editResource.field = req.query.field;
-    editResource.construction = req.query.construction;
-    editResource.bathrooms = req.query.bathrooms;
-    editResource.bedrooms = req.query.bedrooms;
-    editResource.parkingLots = req.query.parkingLots;
+    let description = req.query.description;
+    let address = req.query.address;
+    let contactPhone = req.query.contactPhone;
+    let contactMail = req.query.contactMail;
+    let field = req.query.field;
+    let construction = req.query.construction;
+    let bathrooms = req.query.bathrooms;
+    let bedrooms = req.query.bedrooms;
+    let parkingLots = req.query.parkingLots;
 
     // if(bandera == false){
     //     res.send({
@@ -299,7 +296,7 @@ app.post('/api/updateResource', async (req, res) => {
     //     }
     // }
 
-    const data = await updateResource(editResource, id, bandera, user, hashToken);
+    const data = await updateResource( id, bandera, user, hashToken, description, address, contactPhone, contactMail, field, construction, bathrooms, bedrooms,parkingLots);
     if (data == true) {
         res.send({
             "message": "Recurso editado correctamente",

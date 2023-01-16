@@ -101,10 +101,10 @@ const selectAll = (user, token) => {
 }
 
 // Creacion de un nuevo recurso en la tabla "real_state_list" y verificación de permiso para la acción
-const createResource = async (resource, bandera, user, hash) => {
+const createResource = async (bandera, user, hash, description,address,contactPhone,contactMail,field,construction,bathrooms,bedrooms,parkingLots) => {
     let compare = bcrypt.compareSync(user, hash);
     if (bandera, compare) {
-        const queryCreate = `INSERT INTO real_state_list (ID, Description, Field, Construction, Address, ContactPhone, ContactMail, Bathrooms, Bedrooms, ParkingLots, CreatedDate, DeletedDate) VALUES (NULL,'${resource.description}','${resource.field}','${resource.construction}','${resource.address}','${resource.contactPhone}','${resource.contactMail}','${resource.bathrooms}','${resource.bedrooms}','${resource.parkingLots}',current_timestamp(),'null')`;
+        const queryCreate = `INSERT INTO real_state_list (ID, Description, Field, Construction, Address, ContactPhone, ContactMail, Bathrooms, Bedrooms, ParkingLots, CreatedDate, DeletedDate) VALUES (NULL,'${description}','${field}','${construction}','${address}','${contactPhone}','${contactMail}','${bathrooms}','${bedrooms}','${parkingLots}',current_timestamp(),'null')`;
         return new Promise((resolve, reject) => {
             conn.query(queryCreate, (err, result, fields) => {
                 if (err) return reject(err);
@@ -133,10 +133,10 @@ const deleteResource = async (id, user, hash) => {
 }
 
 // Actualizar un recurso en la tabla "real_state_list" y verificación de permiso para la acción
-const updateResource = async (resource,id,bandera,user,hash) => {
+const updateResource = async (id,bandera,user,hash, description, address, contactPhone, contactMail, field, construction, bathrooms, bedrooms,parkingLots) => {
     let compare = bcrypt.compareSync(user, hash);
     if (bandera, compare) {
-        const queryUpdate = `UPDATE real_state_list SET Description='${resource.description}',Field='${resource.field}',Construction='${resource.construction}',Address='${resource.address}',ContactPhone='${resource.contactPhone}',ContactMail='${resource.contactMail}',Bathrooms='${resource.bathrooms}',Bedrooms='${resource.bedrooms}',ParkingLots='${resource.parkingLots}',DeletedDate='null' WHERE ID = ${id}`
+        const queryUpdate = `UPDATE real_state_list SET Description='${description}',Field='${field}',Construction='${construction}',Address='${address}',ContactPhone='${contactPhone}',ContactMail='${contactMail}',Bathrooms='${bathrooms}',Bedrooms='${bedrooms}',ParkingLots='${parkingLots}',DeletedDate='null' WHERE ID = ${id}`
         return new Promise((resolve, reject) => {
             conn.query(queryUpdate, (err, result, fields) => {
                 if (err) return reject(err);
