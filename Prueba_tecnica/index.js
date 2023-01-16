@@ -74,31 +74,31 @@ app.get('/api/getAll', async (req, res) => {
 //     }
 //     if(req.query.field == "" || typeof parseInt(req.query.field) != "number" || Number.isNaN(parseInt(req.query.field))==true){
 //         bandera = false;
-        
+
 //     }else{
 //         newResource.field = req.query.field;
 //     }
 //     if(req.query.construction == "" || typeof parseInt(req.query.construction) != "number" || Number.isNaN(parseInt(req.query.construction))==true){
 //         bandera = false;
-        
+
 //     }else{
 //         newResource.construction = req.query.construction;
 //     }
 //     if(req.query.bathrooms == "" || typeof parseInt(req.query.bathrooms) != "number" || Number.isNaN(parseInt(req.query.bathrooms))==true){
 //         bandera = false;
-        
+
 //     }else{
 //         newResource.bathrooms = req.query.bathrooms;
 //     }
 //     if(req.query.bedrooms == "" || typeof parseInt(req.query.bedrooms) != "number" || Number.isNaN(parseInt(req.query.bedrooms))==true){
 //         bandera = false;
-        
+
 //     }else{
 //         newResource.bedrooms = req.query.bedrooms;
 //     }
 //     if(req.query.parkingLots == "" || typeof parseInt(req.query.parkingLots) != "number" || Number.isNaN(parseInt(req.query.parkingLots))==true){
 //         bandera = false;
-        
+
 //     }else{
 //         newResource.parkingLots = req.query.parkingLots;
 //     }
@@ -130,58 +130,68 @@ app.post('/api/createResource', async (req, res) => {
     const hashToken = req.query.hash;
 
 
-        newResource.description = req.query.description;
-        newResource.address = req.query.address;
-        newResource.contactPhone = req.query.contactPhone;
-        newResource.contactMail = req.query.contactMail;
- 
-        newResource.field = req.query.field;
-
-        newResource.construction = req.query.construction;
-
-        newResource.bathrooms = req.query.bathrooms;
-
-        newResource.bedrooms = req.query.bedrooms;
-
-        newResource.parkingLots = req.query.parkingLots;
+    newResource.description = req.query.description;
+    newResource.address = req.query.address;
+    newResource.contactPhone = req.query.contactPhone;
+    newResource.contactMail = req.query.contactMail;
+    newResource.field = req.query.field;
+    newResource.construction = req.query.construction;
+    newResource.bathrooms = req.query.bathrooms;
+    newResource.bedrooms = req.query.bedrooms;
+    newResource.parkingLots = req.query.parkingLots;
 
 
-    if(bandera == false){
+    // if (bandera == false) {
+    //     res.send({
+    //         "message": "El recurso no se pudo agregar correctamente, intente de nuevo",
+    //         "code": 1
+    //     });
+    // } else {
+    //     const data = await createResource(newResource, bandera, user, hashToken);
+    //     if (data == true && bandera == true) {
+    //         res.send({
+    //             "message": "Recurso agregado correctamente",
+    //             "code": 0
+    //         });
+    //     } else if (data == 0) {
+    //         res.send({
+    //             "message": "No tienes autorización para hacer esta acción",
+    //             "code": 2
+    //         });
+    //     }
+    // }
+
+
+    const data = await createResource(newResource, bandera, user, hashToken);
+    if (data == true) {
         res.send({
-            "message": "El recurso no se pudo agregar correctamente, intente de nuevo",
-            "code":1
+            "message": "Recurso agregado correctamente",
+            "code": 0
         });
-    }else{
-        const data = await createResource(newResource,bandera,user,hashToken);
-        if (data == true && bandera == true) {
-            res.send({
-                "message": "Recurso agregado correctamente",
-                "code":0
-            });
-        }else if(data == 0){
-            res.send({
-                "message": "No tienes autorización para hacer esta acción",
-                "code":2
-            });
-        }
+    } else {
+        res.send({
+            "message": "No tienes autorización para hacer esta acción",
+            "code": 2
+        });
     }
+
 });
 
-app.post('/api/deleteResource', async (req,res)=>{
+app.post('/api/deleteResource', async (req, res) => {
     const id = req.query.id;
     const user = req.query.user;
     const hashToken = req.query.hash;
-    const data = await deleteResource(id,user,hashToken);
-    
-    if(data){
+    const data = await deleteResource(id, user, hashToken);
+
+    if (data) {
         res.send({
             "message": "Recurso eliminado correctamente",
-            "code":0
+            "code": 0
         });
-    } else{
+    } else {
         res.send({
             "message": "No tienes autorización para hacer esta acción",
-            "code":2
+            "code": 2
         });
     }
 })
@@ -247,10 +257,10 @@ app.post('/api/deleteResource', async (req,res)=>{
 //             });
 //         }
 //     }
-    
+
 // })
 
-app.post('/api/updateResource', async (req,res)=>{
+app.post('/api/updateResource', async (req, res) => {
     const id = req.query.id;
     const user = req.query.user;
     const hashToken = req.query.hash;
@@ -259,58 +269,71 @@ app.post('/api/updateResource', async (req,res)=>{
     let editResource = new Object();
 
 
-        editResource.description = req.query.description;
-        editResource.address = req.query.address;
-        editResource.contactPhone = req.query.contactPhone;
-        editResource.contactMail = req.query.contactMail;
-        editResource.field = req.query.field;
-        editResource.construction = req.query.construction;
-        editResource.bathrooms = req.query.bathrooms;
-        editResource.bedrooms = req.query.bedrooms;
-        editResource.parkingLots = req.query.parkingLots;
+    editResource.description = req.query.description;
+    editResource.address = req.query.address;
+    editResource.contactPhone = req.query.contactPhone;
+    editResource.contactMail = req.query.contactMail;
+    editResource.field = req.query.field;
+    editResource.construction = req.query.construction;
+    editResource.bathrooms = req.query.bathrooms;
+    editResource.bedrooms = req.query.bedrooms;
+    editResource.parkingLots = req.query.parkingLots;
 
-    if(bandera == false){
+    // if(bandera == false){
+    //     res.send({
+    //         "message": "El recurso no se pudo editar correctamente, intente de nuevo",
+    //         "code":1
+    //     });
+    // }else{
+    //     const data = await updateResource(editResource,id,bandera,user,hashToken);
+    //     if (data == true && bandera == true) {
+    //         res.send({
+    //             "message": "Recurso editado correctamente",
+    //             "code":0
+    //         });
+    //     }else if(data == 0){
+    //         res.send({
+    //             "message": "No tienes autorización para hacer esta acción",
+    //             "code":2
+    //         });
+    //     }
+    // }
+
+    const data = await updateResource(editResource, id, bandera, user, hashToken);
+    if (data == true) {
         res.send({
-            "message": "El recurso no se pudo editar correctamente, intente de nuevo",
-            "code":1
+            "message": "Recurso editado correctamente",
+            "code": 0
         });
-    }else{
-        const data = await updateResource(editResource,id,bandera,user,hashToken);
-        if (data == true && bandera == true) {
-            res.send({
-                "message": "Recurso editado correctamente",
-                "code":0
-            });
-        }else if(data == 0){
-            res.send({
-                "message": "No tienes autorización para hacer esta acción",
-                "code":2
-            });
-        }
+    } else {
+        res.send({
+            "message": "No tienes autorización para hacer esta acción",
+            "code": 2
+        });
     }
-    
+
 })
 
-app.get("/isPalindromo",(req,res)=>{
+app.get("/isPalindromo", (req, res) => {
     let palabra = req.query.palabra
     let cadena = palabra.toLowerCase();
     let tam = cadena.length;
 
     let bandera = true;
 
-    for (let i = 0; i < tam/2; i++) {
-        if(cadena[i] !== cadena[tam -1 -i]){
+    for (let i = 0; i < tam / 2; i++) {
+        if (cadena[i] !== cadena[tam - 1 - i]) {
             bandera = false;
         }
     }
-    if(bandera == true){
+    if (bandera == true) {
         res.send("SI");
-    }else{
+    } else {
         res.send("NO");
     }
 });
 
-app.get("/isNum",(req,res)=>{
+app.get("/isNum", (req, res) => {
     let numero = req.query.numero;
     console.log(numero);
     if (numero.length == 13 && (numero[0] === "+" || numero[0] === " ") && (numero[1] + numero[2] == "52")) {
@@ -319,7 +342,7 @@ app.get("/isNum",(req,res)=>{
         res.send("OK");
     } else if (numero.length == 10) {
         res.send("OK");
-    }else{
+    } else {
         res.send("ERROR");
     }
 })
