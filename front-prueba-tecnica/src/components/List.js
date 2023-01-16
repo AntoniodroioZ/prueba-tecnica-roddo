@@ -38,7 +38,7 @@ const List = () => {
     const elementos = [];
 
     React.useEffect(() => {
-        axios.get(`/api/getAll?user=${sessionStorage.getItem("username")}&hash=${sessionStorage.getItem("token")}`)
+        axios.get(`http://18.216.205.212:8000/api/getAll?user=${sessionStorage.getItem("username")}&hash=${sessionStorage.getItem("token")}`)
             .then(res => {
                 const apiData = res.data;
                 setDataApi(apiData);
@@ -60,7 +60,7 @@ const List = () => {
         console.log(addressInp,descriptionInp,fieldInp,constructionInp,bathroomsInp,bedroomsInp,parkingLotsInp,contactMailInp,contactPhoneInp);
     
         if(addressInp!="" && descriptionInp!="" && fieldInp!=""&&constructionInp!="" && bathroomsInp!="" && bedroomsInp!=""&& parkingLotsInp!=""&&contactMailInp!=""&&contactPhoneInp!=""){
-          axios.post(`/api/createResource?&description=${descriptionInp}&field=${fieldInp}&construction=${constructionInp}&address=${constructionInp}&contactPhone=${contactPhoneInp}&contactMail=${contactMailInp}&bathrooms=${bathroomsInp}&bedrooms=${bedroomsInp}&parkingLots=${parkingLotsInp}&hash=${sessionStorage.getItem("token")}&user=${sessionStorage.getItem("username")}`)
+          axios.post(`http://18.216.205.212:8000/api/createResource?&description=${descriptionInp}&field=${fieldInp}&construction=${constructionInp}&address=${constructionInp}&contactPhone=${contactPhoneInp}&contactMail=${contactMailInp}&bathrooms=${bathroomsInp}&bedrooms=${bedroomsInp}&parkingLots=${parkingLotsInp}&hash=${sessionStorage.getItem("token")}&user=${sessionStorage.getItem("username")}`)
           .then(res=>{
             if(res.data.code == 0){
                   navigate("/listado", { replace: true });

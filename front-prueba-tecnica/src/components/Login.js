@@ -29,7 +29,7 @@ const Login = () => {
             );
             // return;
         }
-        axios.post(`/api/login?username=${username}&password=${password}`,)
+        axios.post(`http://18.216.205.212:8000/api/login?username=${username}&password=${password}`,)
         .then(res=>{
             if(res.data.code == 1){
                 swAlert(
