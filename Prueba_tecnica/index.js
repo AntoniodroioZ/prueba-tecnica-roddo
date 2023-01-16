@@ -1,9 +1,12 @@
 import express from 'express'; //importamos express 
+import cors from 'cors';
 
 import { conectar, selectAll, register, login, createResource, deleteResource, updateResource } from './src/bd_connection.js'; //importamos el objeto de conexión
 
 const app = express();
 let data;
+
+app.use(cors());
 // Iniciando el servidor
 app.listen('8000', function () {
     console.log('Aplicacion iniciada en el puerto 8000');
@@ -63,10 +66,6 @@ app.post('/api/createResource', async (req, res) => {
 
     if(req.query.description.length == 0 || req.query.address.length == 0 || req.query.contactPhone.length == 0 || req.query.contactMail.length === 0){
         bandera = false;
-        res.send({
-            "message": "El recurso no se pudo agregar correctamente, intente de nuevo",
-            "code":1
-        });
     } else{
         newResource.description = req.query.description;
         newResource.address = req.query.address;
@@ -156,10 +155,6 @@ app.post('/api/updateResource', async (req,res)=>{
 
     if(req.query.description.length == 0 || req.query.address.length == 0 || req.query.contactPhone.length == 0 || req.query.contactMail.length === 0){
         bandera = false;
-        res.send({
-            "message": "El recurso no se pudo agregar correctamente, intente de nuevo",
-            "code":1
-        });
     } else{
         editResource.description = req.query.description;
         editResource.address = req.query.address;
@@ -168,61 +163,81 @@ app.post('/api/updateResource', async (req,res)=>{
     }
     if(req.query.field == "" || typeof parseInt(req.query.field) != "number" || Number.isNaN(parseInt(req.query.field))==true){
         bandera = false;
-        res.send({
-            "message": "El recurso no se pudo agregar correctamente, intente de nuevo",
-            "code":1
-        });
     }else{
         editResource.field = req.query.field;
     }
     if(req.query.construction == "" || typeof parseInt(req.query.construction) != "number" || Number.isNaN(parseInt(req.query.construction))==true){
         bandera = false;
-        res.send({
-            "message": "El recurso no se pudo agregar correctamente, intente de nuevo",
-            "code":1
-        });
     }else{
         editResource.construction = req.query.construction;
     }
     if(req.query.bathrooms == "" || typeof parseInt(req.query.bathrooms) != "number" || Number.isNaN(parseInt(req.query.bathrooms))==true){
         bandera = false;
-        res.send({
-            "message": "El recurso no se pudo agregar correctamente, intente de nuevo",
-            "code":1
-        });
     }else{
         editResource.bathrooms = req.query.bathrooms;
     }
     if(req.query.bedrooms == "" || typeof parseInt(req.query.bedrooms) != "number" || Number.isNaN(parseInt(req.query.bedrooms))==true){
         bandera = false;
-        res.send({
-            "message": "El recurso no se pudo agregar correctamente, intente de nuevo",
-            "code":1
-        });
     }else{
         editResource.bedrooms = req.query.bedrooms;
     }
     if(req.query.parkingLots == "" || typeof parseInt(req.query.parkingLots) != "number" || Number.isNaN(parseInt(req.query.parkingLots))==true){
         bandera = false;
-        res.send({
-            "message": "El recurso no se pudo agregar correctamente, intente de nuevo",
-            "code":1
-        });
     }else{
         editResource.parkingLots = req.query.parkingLots;
     }
 
-    const data = await updateResource(editResource,id,bandera,user,hashToken);
+    if(bandera == false){
+        res.send({
+            "message": "El recurso no se pudo editar correctamente, intente de nuevo",
+            "code":1
+        });
+    }else{
+        const data = await updateResource(editResource,id,bandera,user,hashToken);
+        if (data == true && bandera == true) {
+            res.send({
+                "message": "Recurso editado correctamente",
+                "code":0
+            });
+        }else if(data == 0){
+            res.send({
+                "message": "No tienes autorización para hacer esta acción",
+                "code":2
+            });
+        }
+    }
+    
+})
 
-    if (data == true && bandera == true) {
-        res.send({
-            "message": "Recurso editado correctamente",
-            "code":0
-        });
-    }else if(data == 0){
-        res.send({
-            "message": "No tienes autorización para hacer esta acción",
-            "code":2
-        });
+app.get("/isPalindromo",(req,res)=>{
+    let palabra = req.query.palabra
+    let cadena = palabra.toLowerCase();
+    let tam = cadena.length;
+
+    let bandera = true;
+
+    for (let i = 0; i < tam/2; i++) {
+        if(cadena[i] !== cadena[tam -1 -i]){
+            bandera = false;
+        }
+    }
+    if(bandera == true){
+        res.send("SI");
+    }else{
+        res.send("NO");
+    }
+});
+
+app.get("/isNum",(req,res)=>{
+    let numero = req.query.numero;
+    console.log(numero);
+    if (numero.length == 13 && (numero[0] === "+" || numero[0] === " ") && (numero[1] + numero[2] == "52")) {
+        res.send("OK");
+    } else if (numero.length == 12 && (numero[0] + numero[1] == "52")) {
+        res.send("OK");
+    } else if (numero.length == 10) {
+        res.send("OK");
+    }else{
+        res.send("ERROR");
     }
 })

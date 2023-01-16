@@ -29,7 +29,12 @@ const Login = () => {
             );
             // return;
         }
-        axios.post(`http://18.216.205.212:8000/api/login?username=${username}&password=${password}`,)
+        axios.post(`http://18.216.205.212:8000/api/login?username=${username}&password=${password}`,{headers: { 
+            'Access-Control-Allow-Origin': '*',
+                'origin':'x-requested-with',
+                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+                'Content-Type': 'application/json',
+          },})
         .then(res=>{
             if(res.data.code == 1){
                 swAlert(
