@@ -47,7 +47,7 @@ const Cards = (props) => {
     console.log(addressInp,descriptionInp,fieldInp,constructionInp,bathroomsInp,bedroomsInp,parkingLotsInp,contactMailInp,contactPhoneInp);
 
     if(addressInp!="" && descriptionInp!="" && fieldInp!=""&&constructionInp!="" && bathroomsInp!="" && bedroomsInp!=""&& parkingLotsInp!=""&&contactMailInp!=""&&contactPhoneInp!=""){
-      axios.post(`http://18.216.205.212:8000/api/updateResource?id=${props.ID}&description=${descriptionInp}&field=${fieldInp}&construction=${constructionInp}&address=${constructionInp}&contactPhone=${contactPhoneInp}&contactMail=${contactMailInp}&bathrooms=${bathroomsInp}&bedrooms=${bedroomsInp}&parkingLots=${parkingLotsInp}&hash=${sessionStorage.getItem("token")}&user=${sessionStorage.getItem("username")}`)
+      axios.post(`/api/updateResource?id=${props.ID}&description=${descriptionInp}&field=${fieldInp}&construction=${constructionInp}&address=${constructionInp}&contactPhone=${contactPhoneInp}&contactMail=${contactMailInp}&bathrooms=${bathroomsInp}&bedrooms=${bedroomsInp}&parkingLots=${parkingLotsInp}&hash=${sessionStorage.getItem("token")}&user=${sessionStorage.getItem("username")}`)
       .then(res=>{
         if(res.data.code == 0){
               navigate("/listado", { replace: true });
@@ -70,7 +70,7 @@ const Cards = (props) => {
     })
       .then((willDelete) => {
         if (willDelete) {
-          axios.post(`http://18.216.205.212:8000/api/deleteResource?id=${props.ID}&user=${sessionStorage.getItem("username")}&hash=${sessionStorage.getItem("token")}`)
+          axios.post(`/api/deleteResource?id=${props.ID}&user=${sessionStorage.getItem("username")}&hash=${sessionStorage.getItem("token")}`)
             .then(res => {
               swal("Eliminado", "El recurso ha sido eliminado", "success");
               navigate("/listado", { replace: true });
